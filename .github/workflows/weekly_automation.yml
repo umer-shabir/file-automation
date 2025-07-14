@@ -4,6 +4,7 @@ on:
   schedule:
     # Runs every week on Monday at midnight UTC
     - cron: "0 0 * * 1"
+  workflow_dispatch:  # This allows you to manually trigger the workflo
 
 jobs:
   clean_data_job:
