@@ -1,0 +1,40 @@
+name: Clean Data Weekly
+
+on:
+  schedule:
+    # Runs every week on Monday at midnight UTC
+    - cron: "0 0 * * 1"
+
+jobs:
+  clean_data_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      # Install dependencies
+      - name: Install pandas
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas
+
+      # Run the cleaning script
+      - name: Run the cleaning script
+        run: python clean_data.py
+
+      # Commit and push the new cleaned data
+      - name: Commit and push cleaned data
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: "GitHub Actions"
+          author_email: "actions@github.com"
+          message: "Automated data cleaning - replaced cleaned_data.csv"
+          add: "cleaned_data.csv"
